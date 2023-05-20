@@ -6,8 +6,6 @@ This is my first attempt at using terraform so bear with me as I get familiar wi
 
 In this example, we have tried to use serverless technologies as much as possible. Hence, we chose to run the site on Fargate and are using Aurora Serverless as DB.
 
-Sure, here's an updated README file that includes instructions on creating a Terraform state bucket and updating the `provider.tf` file:
-
 ## AWS Services
 
 We used the below AWS services in our example. The main motivation behind the selection of services is that we select as many serverless components as possible.
@@ -20,6 +18,8 @@ We used the below AWS services in our example. The main motivation behind the se
 - S3 - for media storage
 
 ## Terraform setup
+
+Note: Before running the Terraform commands, make sure you have set up your AWS CLI on your local machine and created an access key. You can create an access key by following the instructions on the [AWS documentation](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). Once you have created an access key, configure your AWS CLI by running `aws configure` and entering your access key, secret access key, default region, and default output format.
 
 ### Creating a Terraform state bucket
 
