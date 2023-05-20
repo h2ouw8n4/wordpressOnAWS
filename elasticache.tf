@@ -23,14 +23,14 @@ resource "aws_security_group" "elasticache" {
 }
 
 resource "aws_elasticache_cluster" "this" {
-  cluster_id                 = "${var.prefix}-elasticache-cluster-${var.environment}"
-  engine                     = "memcached"
-  engine_version             = "1.6.6"
-  node_type                  = "cache.t2.micro"
-  num_cache_nodes            = 2
-  parameter_group_name       = "default.memcached1.6"
-  port                       = 11211
-  security_group_ids         = [aws_security_group.elasticache.id]
-  subnet_group_name          = aws_elasticache_subnet_group.this.name
-  tags                       = var.tags
+  cluster_id           = "${var.prefix}-elasticache-cluster-${var.environment}"
+  engine               = "memcached"
+  engine_version       = "1.6.6"
+  node_type            = "cache.t2.micro"
+  num_cache_nodes      = 2
+  parameter_group_name = "default.memcached1.6"
+  port                 = 11211
+  security_group_ids   = [aws_security_group.elasticache.id]
+  subnet_group_name    = aws_elasticache_subnet_group.this.name
+  tags                 = var.tags
 }

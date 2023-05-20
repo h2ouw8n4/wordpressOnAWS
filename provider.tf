@@ -3,7 +3,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "mybucket"
+    bucket = "axny-terraform-state"
     key    = "wordpress"
   }
 }
