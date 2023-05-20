@@ -1,0 +1,77 @@
+Sure, here's an updated `.gitignore` file that includes ignore statements for JetBrains IDE:
+
+```
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are automatically generated
+*.auto.tfvars
+
+# Ignore override files as they are usually used to override resources locally and not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+cli.tfrc
+terraform.rc
+
+# Ignore .terraform.lock.hcl files
+.terraform.lock.hcl
+
+# Ignore .terraform/environment files
+.terraform/environment
+
+# Ignore .terraform/plugins directory
+.terraform/plugins
+
+# Ignore .terraform/providers directory
+.terraform/providers
+
+# Ignore .terraform/modules directory
+.terraform/modules
+
+# Ignore .terraform/work directory
+.terraform/work
+
+# Ignore .terraform/.terraformrc
+.terraform/.terraformrc
+
+# Ignore .terraform/.terraformrc.backup
+.terraform/.terraformrc.backup
+
+# Ignore .terraform/.terraform.lock
+.terraform/.terraform.lock
+
+# Ignore .terraform/.terraform.tfstate
+.terraform/.terraform.tfstate
+
+# Ignore .terraform/.terraform.tfstate.backup
+.terraform/.terraform.tfstate.backup
+
+# Ignore .terraform/.terraform.tfvars
+.terraform/.terraform.tfvars
+
+# Ignore .terraform/.terraform.tfvars.json
+.terraform/.terraform.tfvars.json
+
+# Ignore JetBrains IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# Ignore other JetBrains IDE files
+*.pyc
+*.pyo
+*.DS_Store
+__pycache__/
