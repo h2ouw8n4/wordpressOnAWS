@@ -1,3 +1,12 @@
+---
+name: Documentation Update
+about: Request an update/addition to the documentation
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## Documentation Description
 
 Please provide a clear and concise description of the documentation that needs to be updated.
