@@ -180,7 +180,7 @@ resource "aws_ecs_task_definition" "this" {
       },
       {
         "name": "WORDPRESS_CONFIG_EXTRA",
-        "value": "define('WP_ALLOW_MULTISITE', true)"
+        "value": "define('WP_ALLOW_MULTISITE', true);"
       }
     ],
     "essential": true,
