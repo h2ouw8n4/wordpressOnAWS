@@ -1,0 +1,30 @@
+# Enable the Apache mod_rewrite engine
+RewriteEngine On
+
+# Set the HTTP_AUTHORIZATION environment variable to the value of the HTTP_AUTHORIZATION header
+RewriteRule .* - [E=HTTP_AUTHORIZATION:$${HTTP_AUTHORIZATION}]
+
+# Set the base URL for the rewrite rules
+RewriteBase /
+
+# If the URL ends in "index.php", stop processing the rewrite rules
+RewriteRule ^index\\.php$ - [L]
+
+# Add a trailing slash to /wp-admin
+RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]
+
+# If the requested file exists and is a regular file, or...
+RewriteCond $${REQUEST_FILENAME} -f [OR]
+# If the requested file exists and is a directory
+RewriteCond $${REQUEST_FILENAME} -d
+# Stop processing the rewrite rules
+RewriteRule ^ - [L]
+
+# If the URL matches /wp-content, /wp-admin, or /wp-includes, rewrite the URL to remove the prefix
+RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) $2 [L]
+
+# If the URL ends in ".php", remove the prefix
+RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\\.php)$ $2 [L]
+
+# Rewrite all other URLs to index.php
+RewriteRule . index.php [L]
