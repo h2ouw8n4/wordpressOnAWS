@@ -180,7 +180,7 @@ resource "aws_ecs_task_definition" "this" {
       },
       {
         "name": "WORDPRESS_CONFIG_EXTRA",
-        "value": "define('WP_ALLOW_MULTISITE', true);"
+        "value": "define( 'WP_ALLOW_MULTISITE', true );define( 'MULTISITE', true );define( 'SUBDOMAIN_INSTALL', true );define( 'DOMAIN_CURRENT_SITE', '${var.site_domain}' );define( 'PATH_CURRENT_SITE', '/' );define( 'BLOG_ID_CURRENT_SITE', 1 );"
       }
     ],
     "essential": true,
@@ -196,6 +196,12 @@ resource "aws_ecs_task_definition" "this" {
         "containerPath": "/var/www/html",
         "sourceVolume": "efs"
       }
+    ],
+    "command": [
+      "sh",
+      "-c",
+      "if [ ! -d /var/www/html/wp-content/plugins/w3-total-cache/ ]; then cd /tmp && curl -o /tmp/unzip_6.0-25ubuntu1_amd64.deb http://archive.ubuntu.com/ubuntu/pool/main/u/unzip/unzip_6.0-25ubuntu1_amd64.deb && ar xvf unzip_6.0-25ubuntu1_amd64.deb && tar -xf data.tar.xz && cp usr/bin/unzip /usr/local/bin/ && cd /tmp && curl -o w3-total-cache.latest-stable.zip https://downloads.wordpress.org/plugin/w3-total-cache.latest-stable.zip && unzip w3-total-cache.latest-stable.zip && mv /tmp/w3-total-cache /var/www/html/wp-content/plugins/; fi",
+      "if [ -f /var/www/html/.htaccess ]; then rm /var/www/html/.htaccess; fi && echo 'RewriteEngine On\\nRewriteRule .* - [E=HTTP_AUTHORIZATION:$${HTTP_AUTHORIZATION}]\\nRewriteBase /\\nRewriteRule ^index\\\\.php$ - [L]\\n\\n# add a trailing slash to /wp-admin\\nRewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]\\n\\nRewriteCond $${REQUEST_FILENAME} -f [OR]\\nRewriteCond $${REQUEST_FILENAME} -d\\nRewriteRule ^ - [L]\\nRewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) $2 [L]\\nRewriteRule ^([_0-9a-zA-Z-]+/)?(.*\\\\.php)$ $2 [L]\\nRewriteRule . index.php [L]' > /var/www/html/.htaccess"
     ],
     "logConfiguration": {
       "logDriver":"awslogs",
