@@ -19,7 +19,27 @@ We used the below AWS services in our example. The main motivation behind the se
 
 ## Terraform setup
 
-Note: Before running the Terraform commands, make sure you have set up your AWS CLI on your local machine and created an access key. You can create an access key by following the instructions on the [AWS documentation](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). Once you have created an access key, configure your AWS CLI by running `aws configure` and entering your access key, secret access key, default region, and default output format.
+Note: Before running the Terraform commands locally, make sure you have set up your AWS CLI on your local machine and created an access key. You can create an access key by following the instructions on the [AWS documentation](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). Once you have created an access key, configure your AWS CLI by running `aws configure` and entering your access key, secret access key, default region, and default output format.
+
+### Configuring Secrets for executing Github Actions
+
+Before running the GitHub Actions workflow to deploy your Terraform project, you will need to set up the following secrets in your repository settings:
+
+- `AWS_ACCESS_KEY_ID`: The access key ID for an AWS IAM user with the appropriate permissions to deploy your infrastructure.
+- `AWS_SECRET_ACCESS_KEY`: The secret access key for the same AWS IAM user.
+- `AWS_REGION`: The AWS region where you want to deploy your infrastructure.
+
+To set up these secrets, follow these steps:
+
+1. Go to your repository on GitHub.
+2. Click on the "Settings" tab.
+3. Click on "Secrets" in the left-hand menu.
+4. Click on "New repository secret" to create a new secret.
+5. Enter the name of the secret (e.g. `AWS_ACCESS_KEY_ID`).
+6. Enter the value of the secret (e.g. your AWS access key ID).
+7. Repeat steps 5-6 for the other two secrets (`AWS_SECRET_ACCESS_KEY` and `AWS_REGION`).
+
+Once you have set up these secrets, you can run the GitHub Actions workflow to deploy your Terraform project. The workflow will automatically authenticate with AWS using the secrets you have set up, and deploy the infrastructure to the specified region.
 
 ### Creating a Terraform state bucket
 
