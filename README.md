@@ -1,110 +1,27 @@
-# Wordpress on Fargate
+# Wordpress on AWS: A Scalable Solution
 
-This terraform example demonstrates how to run a scalable WordPress site based on the AWS reference architecture described at: https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/reference-architecture.html. This example is based on the great work Sunil did at https://github.com/futurice/terraform-examples/tree/master/aws/wordpress_fargate, but with a couple of additional layers added, including using memcached and S3. Read more about the repository this was based on at the blog [Terraform Recipe for WordPress on Fargate](https://futurice.com/blog/terraform-recipe-wordpress-fargate)
+Welcome to the repository for our project, a scalable WordPress site hosted on AWS. This project is based on the AWS reference architecture, providing a comprehensive guide on how to run WordPress on AWS effectively.
 
-This is my first attempt at using terraform so bear with me as I get familiar with terraform best practices.
+## Why Choose Wordpress on AWS?
 
-In this example, we have tried to use serverless technologies as much as possible. Hence, we chose to run the site on Fargate and are using Aurora Serverless as DB.
+Choosing to host your WordPress site on AWS offers numerous benefits. AWS provides a robust and scalable infrastructure that can handle high traffic volumes and deliver fast page load times. It's an ideal solution for businesses looking to scale their WordPress sites without compromising performance.
 
-## AWS Services
+## How to Install Wordpress on AWS
 
-We used the below AWS services in our example. The main motivation behind the selection of services is that we select as many serverless components as possible.
+This repository provides a Terraform example that demonstrates how to install WordPress on AWS. It's a step-by-step guide that walks you through the process, ensuring you can get your WordPress site up and running on AWS with ease.
 
-- Fargate - for computing
-- Aurora Serverless - for database
-- EFS (Elastic File System) - for persistent data storage
-- Cloudfront - CDN
-- Memcached - for object caching
-- S3 - for media storage
+## AWS Reference Architecture for Wordpress
 
-## Terraform setup
+Our project is based on the AWS reference architecture for WordPress, which is a best practice guide for hosting WordPress on AWS. You can find more about this reference architecture [here](https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/reference-architecture.html).
 
-Note: Before running the Terraform commands locally, make sure you have set up your AWS CLI on your local machine and created an access key. You can create an access key by following the instructions on the [AWS documentation](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys). Once you have created an access key, configure your AWS CLI by running `aws configure` and entering your access key, secret access key, default region, and default output format.
+## Best Practices for Wordpress on AWS
 
-### Configuring Secrets for executing Github Actions
+When hosting WordPress on AWS, it's essential to follow best practices to ensure optimal performance. This includes setting up a scalable architecture, optimizing your database, and implementing effective caching strategies.
 
-Before running the GitHub Actions workflow to deploy your Terraform project, you will need to set up the following secrets in your repository settings:
+## Can I Host My Wordpress Site on AWS?
 
-- `AWS_ACCESS_KEY_ID`: The access key ID for an AWS IAM user with the appropriate permissions to deploy your infrastructure.
-- `AWS_SECRET_ACCESS_KEY`: The secret access key for the same AWS IAM user.
-- `AWS_REGION`: The AWS region where you want to deploy your infrastructure.
+Absolutely! AWS provides a reliable and scalable platform for hosting WordPress sites. Whether you're a small business owner or run a large e-commerce site, AWS can cater to your WordPress hosting needs.
 
-To set up these secrets, follow these steps:
+## Getting Started
 
-1. Go to your repository on GitHub.
-2. Click on the "Settings" tab.
-3. Click on "Secrets" in the left-hand menu.
-4. Click on "New repository secret" to create a new secret.
-5. Enter the name of the secret (e.g. `AWS_ACCESS_KEY_ID`).
-6. Enter the value of the secret (e.g. your AWS access key ID).
-7. Repeat steps 5-6 for the other two secrets (`AWS_SECRET_ACCESS_KEY` and `AWS_REGION`).
-
-Once you have set up these secrets, you can run the GitHub Actions workflow to deploy your Terraform project. The workflow will automatically authenticate with AWS using the secrets you have set up, and deploy the infrastructure to the specified region.
-
-### Creating a Terraform state bucket
-
-Before you can use Terraform to manage your infrastructure, you need to create an S3 bucket to store the Terraform state file. Here are the steps to create a new S3 bucket:
-
-1. Log in to the AWS Management Console with an account that has administrative privileges.
-
-2. Navigate to the S3 dashboard.
-
-3. Click on the "Create bucket" button.
-
-4. Enter a name for the bucket. This name should be unique across all AWS accounts.
-
-5. Choose a region for the bucket. This should be the same region you plan to deploy your infrastructure to.
-
-6. Leave the default settings for the remaining options, and click on the "Create bucket" button.
-
-7. Your new S3 bucket is now ready to use as the backend for your Terraform project.
-
-### Updating the `provider.tf` file
-
-After creating the S3 bucket to store the Terraform state file, you need to update the `provider.tf` file to specify the new bucket name. Here are the steps to do that:
-
-1. Open the `provider.tf` file in your Terraform code.
-
-2. Locate the `backend` configuration block.
-
-3. Update the `bucket` parameter in the `backend` configuration block to the name of the S3 bucket you created in the previous step.
-
-4. If the S3 bucket is in a different region than the one specified in the `provider` configuration block, update the `region` parameter in the `backend` configuration block to the new region.
-
-5. Save the changes to the `provider.tf` file.
-
-### Initialization
-
-After creating the S3 bucket and updating the `provider.tf` file, you need to initialize the Terraform environment by running the following command in the project directory:
-
-```sh
-terraform init
-```
-
-### Create environment
-
-```sh
-AWS_SDK_LOAD_CONFIG=1 \
-TF_VAR_site_domain=<PUBLIC_DOMAIN> \
-TF_VAR_public_alb_domain=<INTERNAL_DOMAIN_FOR_ALB> \
-TF_VAR_db_master_username=<DB_MASTER_USERNAME> \
-TF_VAR_db_master_password="<DB_MASTER_PASSWORD>" \
-AWS_PROFILE=<AWS_PROFILE> \
-AWS_DEFAULT_REGION=<AWS_REGION> \
-terraform apply
-```
-
-### Tear down
-
-```sh
-AWS_SDK_LOAD_CONFIG=1 \
-TF_VAR_site_domain=<PUBLIC_DOMAIN> \
-TF_VAR_public_alb_domain=<INTERNAL_DOMAIN_FOR_ALB> \
-TF_VAR_db_master_username=<DB_MASTER_USERNAME> \
-TF_VAR_db_master_password="<DB_MASTER_PASSWORD>" \
-AWS_PROFILE=<AWS_PROFILE> \
-AWS_DEFAULT_REGION=<AWS_REGION> \
-terraform destroy
-```
-
-p.s. Instead of environment variables, you can obviously use .tfvar files for assigning values to Terraform variables.
+Ready to get started with WordPress on AWS? Check out our [Getting Started Guide](https://github.com/h2ouw8n4/wordpressOnAWS/blob/main/GETTING_STARTED.md) for detailed instructions on how to set up your WordPress site on AWS.
