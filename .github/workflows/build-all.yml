@@ -1,0 +1,41 @@
+name: Build Docker and Apply Terraform Changes to AWS
+
+on:
+  push:
+    paths-ignore:
+      - 'docker/**' # Exclude changes made in the specific directory
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      # build Docker image and push to ECR
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com
+      - name: Build Docker Image
+        run: docker build .
+      - name: Tag Docker Image
+        run: docker tag wordpress-memcached:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/wordpress-memcached:latest
+      - name: Push Docker Image
+        run: docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/wordpress-memcached:latest
+      # execute Terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: latest
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform plan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
