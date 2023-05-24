@@ -25,14 +25,6 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build Docker Image
-        run: docker build ./docker
-        env:
-          REPOSITORY: wp
-          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$REPOSITORY
-          IMAGE_TAG: ${{ github.sha }}
+        run: docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/wp:${{ github.sha }} ./docker
       - name: Push Docker Image
-        run: docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-        env:
-          REPOSITORY: wp
-          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$REPOSITORY
-          IMAGE_TAG: ${{ github.sha }}
+        run: docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/wp:${{ github.sha }}
