@@ -5,28 +5,26 @@ resource "random_string" "snapshot_suffix" {
 
 resource "aws_rds_cluster" "this" {
   cluster_identifier        = "${var.prefix}-${var.environment}"
-  engine                    = "aurora-mysql"
-  engine_mode               = "provisioned"
-  vpc_security_group_ids    = [aws_security_group.db.id]
-  db_subnet_group_name      = aws_db_subnet_group.this.name
-  engine_version            = var.db_engine_version
+  engine                    = "aurora"
+  engine_mode               = "serverless"
   database_name             = "wordpress"
+  //engine_version            = var.db_engine_version
   master_username           = var.db_master_username
   master_password           = var.db_master_password
   backup_retention_period   = var.db_backup_retention_days
   preferred_backup_window   = var.db_backup_window
   final_snapshot_identifier = "${var.prefix}-${var.environment}-${random_string.snapshot_suffix.result}"
-  availability_zones        = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  db_subnet_group_name      = aws_db_subnet_group.this.name
+  vpc_security_group_ids    = [aws_security_group.db.id]
+  availability_zones        = [data.aws_availability_zones.this.names[0], data.aws_availability_zones.this.names[1], data.aws_availability_zones.this.names[2]]
   tags                      = var.tags
-}
-
-resource "aws_rds_cluster_instance" "this" {
-  count              = 2
-  cluster_identifier = aws_rds_cluster.this.id
-  engine             = aws_rds_cluster.this.engine
-  engine_version     = aws_rds_cluster.this.engine_version
-  instance_class     = "db.t3.medium"
-  tags               = var.tags
+  scaling_configuration {
+    auto_pause               = true
+    min_capacity             = 1
+    max_capacity             = 8
+    seconds_until_auto_pause = 300
+    timeout_action           = "RollbackCapacityChange"
+  }
 }
 
 resource "aws_db_subnet_group" "this" {
