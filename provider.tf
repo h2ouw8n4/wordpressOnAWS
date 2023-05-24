@@ -1,9 +1,6 @@
-provider "aws" {
-}
-
 terraform {
   backend "s3" {
-    bucket = "axny-terraform-state"
+    bucket = "muensterman-tf-state"
     key    = "wordpress"
   }
 }
