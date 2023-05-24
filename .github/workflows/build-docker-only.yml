@@ -32,3 +32,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
       - name: Push Docker Image
         run: docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        env:
+          REPOSITORY: wp
+          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$REPOSITORY
+          IMAGE_TAG: ${{ github.sha }}
