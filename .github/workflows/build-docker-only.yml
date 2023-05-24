@@ -26,6 +26,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          registry-ids: ${{ secrets.AWS_ACCOUNT_ID }}
       - name: Build Docker Image
         run: docker build .
       - name: Tag Docker Image
