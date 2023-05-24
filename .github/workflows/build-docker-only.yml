@@ -1,6 +1,7 @@
 name: Build Container Only
 
 on:
+  workflow_dispatch:
   push:
     paths-ignore:
       # Exclude changes made in the root directory but not in the docker directory

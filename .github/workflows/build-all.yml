@@ -1,6 +1,7 @@
 name: Build Docker and Apply Terraform Changes to AWS
 
 on:
+  workflow_dispatch:
   push:
     paths-ignore:
       - 'docker/**' # Exclude changes made in the specific directory
