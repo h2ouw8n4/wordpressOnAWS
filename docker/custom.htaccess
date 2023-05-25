@@ -3,7 +3,7 @@ RewriteEngine On
 
 # Set the HTTP_AUTHORIZATION environment variable to the value of the HTTP_AUTHORIZATION header
 RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule .* - [E=HTTP_AUTHORIZATION:$${HTTP_AUTHORIZATION}]
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP_AUTHORIZATION}]
 
 # Set the base URL for the rewrite rules
 RewriteBase /
@@ -15,9 +15,9 @@ RewriteRule ^index\\.php$ - [L]
 RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]
 
 # If the requested file exists and is a regular file, or...
-RewriteCond $${REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
 # If the requested file exists and is a directory
-RewriteCond $${REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME} -d
 # Stop processing the rewrite rules
 RewriteRule ^ - [L]
 
