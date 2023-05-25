@@ -1,5 +1,5 @@
 FROM wordpress:latest
-LABEL name="wordpress-memcached"
+LABEL name="wp"
 LABEL authors="Derek Muensterman - https://github.com/h2ouw8n4"
 
 # Install Memcached PHP extension
@@ -13,12 +13,9 @@ RUN curl -L -O https://downloads.wordpress.org/plugin/memcached.4.0.0.zip && \
     unzip memcached.*.zip -d /usr/src/wordpress/wp-content/plugins && \
     rm memcached.*.zip
 
-# Copy custom.htaccess file and entrypoint.sh script to the Docker image
+# Copy custom.htaccess file to the Docker image
 COPY custom.htaccess /custom.htaccess
-COPY entrypoint.sh /entrypoint.sh
+COPY custom-htaccess.sh /custom-htaccess.sh
 
 # Make sure entrypoint.sh is executable
-RUN chmod +x /entrypoint.sh
-
-# Use the entrypoint.sh script as the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+RUN chmod +x /custom-htaccess.sh
