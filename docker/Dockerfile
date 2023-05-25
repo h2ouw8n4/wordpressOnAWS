@@ -13,11 +13,12 @@ RUN curl -L -O https://downloads.wordpress.org/plugin/memcached.4.0.0.zip && \
     unzip memcached.*.zip -d /usr/src/wordpress/wp-content/plugins && \
     rm memcached.*.zip
 
-# Copy .htaccess file from project directory
-COPY .htaccess /usr/src/wordpress/.htaccess
+# Copy custom.htaccess file and entrypoint.sh script to the Docker image
+COPY custom.htaccess /custom.htaccess
+COPY entrypoint.sh /entrypoint.sh
 
-# Set ownership of .htaccess file to www-data
-RUN chown www-data:www-data /usr/src/wordpress/.htaccess
+# Make sure entrypoint.sh is executable
+RUN chmod +x /entrypoint.sh
 
-# Set permissions of .htaccess file to 644
-RUN chmod 644 /usr/src/wordpress/.htaccess
+# Use the entrypoint.sh script as the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]

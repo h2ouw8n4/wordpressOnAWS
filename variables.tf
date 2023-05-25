@@ -12,7 +12,7 @@ variable "site_domain" {
   description = "The primary domain name of the website"
 }
 variable "public_alb_domain" {
-  description = "The public domian name of the ALB"
+  description = "The public domain name of the ALB"
 }
 
 variable "cf_price_class" {

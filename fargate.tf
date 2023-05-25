@@ -180,11 +180,11 @@ resource "aws_ecs_task_definition" "this" {
       },
       {
         "name": "WORDPRESS_CONFIG_EXTRA",
-        "value": "define( 'WP_ALLOW_MULTISITE', true );define( 'MULTISITE', true );define( 'SUBDOMAIN_INSTALL', true );define( 'DOMAIN_CURRENT_SITE', '${var.site_domain}' );define( 'PATH_CURRENT_SITE', '/' );define( 'BLOG_ID_CURRENT_SITE', 1 );"
+        "value": "define( 'DOMAIN_CURRENT_SITE', '${var.site_domain}' );define( 'PATH_CURRENT_SITE', '/' );define( 'BLOG_ID_CURRENT_SITE', 1 );"
       }
     ],
     "essential": true,
-    "image": "278082022129.dkr.ecr.us-east-1.amazonaws.com/wp:27e171fa54be5beb31f3e33f2331f2510f377058",
+    "image": "278082022129.dkr.ecr.us-east-1.amazonaws.com/wp:779a7e2ec94586f14c92070e59f23dcf1b9ae442",
     "name": "wordpress",
     "portMappings": [
       {
