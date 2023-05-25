@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # Set the HTTP_AUTHORIZATION environment variable to the value of the HTTP_AUTHORIZATION header
-RewriteRule .* - [E=HTTP_AUTHORIZATION:$${HTTP_AUTHORIZATION}]
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP_AUTHORIZATION}]
 
 # Set the base URL for the rewrite rules
 RewriteBase /
