@@ -12,10 +12,3 @@ RUN apt-get update && \
 RUN curl -L -O https://downloads.wordpress.org/plugin/memcached.4.0.0.zip && \
     unzip memcached.*.zip -d /usr/src/wordpress/wp-content/plugins && \
     rm memcached.*.zip
-
-# Copy custom.htaccess file to the Docker image
-COPY custom.htaccess /custom.htaccess
-COPY custom-htaccess.sh /custom-htaccess.sh
-
-# Make sure entrypoint.sh is executable
-RUN chmod +x /custom-htaccess.sh
