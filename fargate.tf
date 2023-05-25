@@ -184,7 +184,7 @@ resource "aws_ecs_task_definition" "this" {
       }
     ],
     "essential": true,
-    "image": "278082022129.dkr.ecr.us-east-1.amazonaws.com/wp:779a7e2ec94586f14c92070e59f23dcf1b9ae442",
+    "image": "278082022129.dkr.ecr.us-east-1.amazonaws.com/wp:57440ab6096ed7fe73c81419d88ebb7a87d4f8b6",
     "name": "wordpress",
     "portMappings": [
       {
