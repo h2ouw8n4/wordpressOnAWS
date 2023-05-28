@@ -23,4 +23,6 @@ RUN random_string=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 50) && 
 
 RUN sed -i "/* That's all, stop editing! Happy publishing. */i \$memcached_servers = array('default' => array('\$WP_MEMCACHED_ENDPOINT', '\$WP_MEMCACHED_ENDPOINT'));" /usr/src/wordpress/wp-config-docker.php
 
-RUN cat /usr/src/wordpress/wp-config-docker.php
+RUN cat /var/www/html/wp-config-docker.php
+
+RUN cat /var/www/html/wp-config.php
