@@ -17,7 +17,7 @@ RUN curl -o memcached.zip -L -O https://downloads.wordpress.org/plugin/memcached
 # Copy custom .htaccess
 COPY custom.htaccess /usr/src/wordpress/.htaccess
 
-RUN cp /usr/src/wordpress/wp-content/plugins/memcached/object-cache.php /usr/src/wordpress/wp-content/object-cache.php
+RUN mv /usr/src/wordpress/wp-content/plugins/memcached/object-cache.php /usr/src/wordpress/wp-content/object-cache.php
 
 RUN random_string=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 50) && \
     sed -i "/* That's all, stop editing! Happy publishing. */i\define( 'WP_CACHE_KEY_SALT', '${random_string}' );" /usr/src/wordpress/wp-config-docker.php
