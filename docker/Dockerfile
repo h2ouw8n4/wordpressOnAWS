@@ -2,11 +2,12 @@ FROM wordpress:latest
 LABEL name="wp-memcached"
 LABEL authors="Derek Muensterman - https://github.com/h2ouw8n4"
 
-# Install Memcached PHP extension
+# Install Memcache PHP extension
 RUN apt-get update && \
-    apt-get install -y unzip libmemcached-dev zlib1g-dev && \
-    pecl install memcached && \
-    docker-php-ext-enable memcached
+    apt-get install -y unzip zlib1g-dev && \
+    pecl install memcache && \
+    docker-php-ext-enable memcache
+
 
 # Download and install Memcached plugin
 RUN curl -o memcached.zip -L -O https://downloads.wordpress.org/plugin/memcached.4.0.0.zip && \
