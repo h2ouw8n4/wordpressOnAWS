@@ -5,10 +5,10 @@ resource "random_string" "snapshot_suffix" {
 
 resource "aws_rds_cluster" "this" {
   cluster_identifier        = "${var.prefix}-${var.environment}"
-  engine                    = "aurora"
-  engine_mode               = "serverless"
+  engine                    = "aurora-mysql"
+  engine_mode               = "provisioned"
   database_name             = "wordpress"
-  //engine_version            = var.db_engine_version
+  engine_version            = var.db_engine_version
   master_username           = var.db_master_username
   master_password           = var.db_master_password
   backup_retention_period   = var.db_backup_retention_days
@@ -18,13 +18,6 @@ resource "aws_rds_cluster" "this" {
   vpc_security_group_ids    = [aws_security_group.db.id]
   availability_zones        = [data.aws_availability_zones.this.names[0], data.aws_availability_zones.this.names[1], data.aws_availability_zones.this.names[2]]
   tags                      = var.tags
-  scaling_configuration {
-    auto_pause               = true
-    min_capacity             = 1
-    max_capacity             = 8
-    seconds_until_auto_pause = 300
-    timeout_action           = "RollbackCapacityChange"
-  }
 }
 
 resource "aws_db_subnet_group" "this" {

@@ -129,7 +129,6 @@ resource "aws_ecs_service" "this" {
   task_definition  = aws_ecs_task_definition.this.arn
   desired_count    = var.desired_count
   launch_type      = "FARGATE"
-  platform_version = "1.4.0" // required for mounting efs
   network_configuration {
     security_groups = [aws_security_group.alb.id, aws_security_group.db.id, aws_security_group.efs.id]
     subnets         = module.vpc.private_subnets
@@ -180,11 +179,15 @@ resource "aws_ecs_task_definition" "this" {
       },
       {
         "name": "WORDPRESS_CONFIG_EXTRA",
-        "value": "define( 'DOMAIN_CURRENT_SITE', '${var.site_domain}' );define( 'PATH_CURRENT_SITE', '/' );define( 'BLOG_ID_CURRENT_SITE', 1 );"
+        "value": ""
+      },
+      {
+        "name": "WP_MEMCACHED_ENDPOINT",
+        "value": "${aws_elasticache_cluster.this.configuration_endpoint}"
       }
     ],
     "essential": true,
-    "image": "278082022129.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/wp:latest",
+    "image": "410869614410.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/wp:latest",
     "name": "wordpress",
     "portMappings": [
       {

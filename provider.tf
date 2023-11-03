@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "muensterman-tf-state"
+    bucket = "giant-propeller-tf-state"
     key    = "wordpress"
   }
 }
