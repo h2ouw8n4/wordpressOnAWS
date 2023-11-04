@@ -79,7 +79,7 @@ variable "db_master_password" {
 }
 variable "db_engine_version" {
   description = "The database engine version"
-  default     = "8.0.mysql_aurora.3.03.1"
+  default     = "3.03.2"
 }
 variable "db_auto_pause" {
   description = "Whether to enable auto pause"
