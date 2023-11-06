@@ -170,7 +170,7 @@ resource "aws_ecs_task_definition" "this" {
     cpu_architecture = "ARM64" # Indicate Graviton2 processor architecture
     operating_system_family = "LINUX"
   }
-  
+
   container_definitions    = <<CONTAINER_DEFINITION
 [
   {
