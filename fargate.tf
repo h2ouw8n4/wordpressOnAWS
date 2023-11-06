@@ -220,6 +220,7 @@ CONTAINER_DEFINITION
   }
 }
 
+
 resource "aws_cloudwatch_log_group" "wordpress" {
   name              = "/${var.prefix}/${var.environment}/fg-task"
   tags              = var.tags
