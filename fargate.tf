@@ -101,6 +101,16 @@ resource "aws_ecs_cluster" "this" {
   name = "${var.prefix}-${var.environment}"
 }
 
+resource "aws_ecs_cluster_capacity_providers" "cluster" {
+  cluster_name = "${var.prefix}-${var.environment}"
+
+  capacity_providers = ["FARGATE_SPOT", "FARGATE"]
+
+  default_capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+  }
+}
+
 resource "aws_security_group" "wordpress" {
   name        = "${var.prefix}-wordpress-${var.environment}"
   description = "Fargate wordpress"
@@ -155,6 +165,12 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.task_cpu
   memory                   = var.task_memory
+
+  runtime_platform {
+    cpu_architecture = "ARM64" # Indicate Graviton2 processor architecture
+    operating_system_family = "LINUX"
+  }
+  
   container_definitions    = <<CONTAINER_DEFINITION
 [
   {
