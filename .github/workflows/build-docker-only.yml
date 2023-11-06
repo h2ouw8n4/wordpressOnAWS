@@ -24,6 +24,8 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+      - name: Set up for ARM Build
+        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build Docker Image
         run: docker buildx build --platform linux/arm64/v8  -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/wp:latest ./docker
       - name: Push Docker Image
