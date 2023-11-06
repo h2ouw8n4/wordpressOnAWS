@@ -16,7 +16,7 @@ RUN curl -o w3-total-cache.zip -L -O https://downloads.wordpress.org/plugin/w3-t
 RUN curl -o latest-64bit -L -O https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-8.0/latest-64bit-X86-openssl3 && \
     tar -zxvf latest-64bit && \
     mv ./amazon-elasticache-cluster-client.so /usr/local/lib/php/extensions/no-debug-non-zts*/ && \
-    echo "extension=amazon-elasticache-cluster-client.so" | sudo tee --append /usr/local/etc/php/conf.d/50-memcached.ini
+    echo "extension=amazon-elasticache-cluster-client.so" | tee --append /usr/local/etc/php/conf.d/50-memcached.ini
 
 # Copy custom .htaccess
 COPY custom.htaccess /usr/src/wordpress/.htaccess
