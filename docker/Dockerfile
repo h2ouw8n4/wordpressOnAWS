@@ -3,10 +3,10 @@ LABEL name="wp-memcache"
 LABEL authors="Derek Muensterman - https://github.com/h2ouw8n4"
 
 # Install Memcache PHP extension
-RUN apt-get update && \
-    apt-get install -y unzip zlib1g zlib1g-dev libssl-dev && \
-    pecl install memcache && \
-    docker-php-ext-enable memcache
+RUN apt-get update
+RUN apt-get install -y unzip zlib1g zlib1g-dev libssl-dev
+RUN pecl install memcache docker-php-ext-enable memcache
+
 
 # Download and install Total Cache plugin
 RUN curl -o w3-total-cache.zip -L -O https://downloads.wordpress.org/plugin/w3-total-cache.2.5.0.zip && \
