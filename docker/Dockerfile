@@ -15,14 +15,13 @@ RUN curl -o w3-total-cache.zip -L -O https://downloads.wordpress.org/plugin/w3-t
 
 RUN curl -o latest-64bit -L -O https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-8.0/latest-64bit-X86-openssl3 && \
     tar -zxvf latest-64bit && \
-    ls /usr/lib64/php && \
-    mv ./amazon-elasticache-cluster-client.so /usr/lib64/php/8.0/modules/ && \
-    echo "extension=amazon-elasticache-cluster-client.so" | sudo tee --append /etc/php-8.0/50-memcached.ini
+    mv ./amazon-elasticache-cluster-client.so /usr/local/lib/php/extensions/no-debug-non-zts*/ && \
+    echo "extension=amazon-elasticache-cluster-client.so" | sudo tee --append /usr/local/etc/php/conf.d/50-memcached.ini
 
 # Copy custom .htaccess
 COPY custom.htaccess /usr/src/wordpress/.htaccess
 
-RUN mv /usr/src/wordpress/wp-content/plugins/memcached/object-cache.php /usr/src/wordpress/wp-content/object-cache.php
+#RUN mv /usr/src/wordpress/wp-content/plugins/memcached/object-cache.php /usr/src/wordpress/wp-content/object-cache.php
 
 RUN random_string=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 50) && \
     sed -i "/* That's all, stop editing! Happy publishing. */i \define( 'WP_CACHE_KEY_SALT', '${random_string}' );" /usr/src/wordpress/wp-config-docker.php
