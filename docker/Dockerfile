@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM --platform=linux/arm64/v8 wordpress:latest
 LABEL name="wp-memcache"
 LABEL authors="Derek Muensterman - https://github.com/h2ouw8n4"
 
