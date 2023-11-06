@@ -4,7 +4,7 @@ LABEL authors="Derek Muensterman - https://github.com/h2ouw8n4"
 
 # Install Memcache PHP extension
 RUN apt-get update && \
-    apt-get install -y unzip zlib1g-dev && \
+    apt-get install -y unzip zlib1g zlib1g-dev libssl-dev && \
     pecl install memcache && \
     docker-php-ext-enable memcache
 
@@ -13,8 +13,10 @@ RUN curl -o w3-total-cache.zip -L -O https://downloads.wordpress.org/plugin/w3-t
     unzip w3-total-cache.zip -d /usr/src/wordpress/wp-content/plugins && \
     rm w3-total-cache.zip
 
-RUN curl -o latest-64bit -L -O https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-8.0/latest-64bit-X86-openssl3 && \
+RUN curl -o latest-64bit -L -O https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-8.0/latest-64bit-arm-openssl1.1 && \
     tar -zxvf latest-64bit && \
+    chmod o+x ./amazon-elasticache-cluster-client.so && \
+    chown root:root ./amazon-elasticache-cluster-client.so && \
     mv ./amazon-elasticache-cluster-client.so /usr/local/lib/php/extensions/no-debug-non-zts*/ && \
     echo "extension=amazon-elasticache-cluster-client.so" | tee --append /usr/local/etc/php/conf.d/50-memcached.ini
 
